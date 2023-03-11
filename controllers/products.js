@@ -1,4 +1,5 @@
-const products = [];
+const { fetchAll } = require('../models/product');
+const Product=require('../models/product')
 
 exports.getaddproducts=(req, res, next) => {
     res.render('add-product', {
@@ -10,11 +11,12 @@ exports.getaddproducts=(req, res, next) => {
     });
   }
 exports.postaddproducts=(req, res, next) => {
-  products.push({ title: req.body.title });
+ const product=new Product(req.body.title)
+ product.save()
   res.redirect('/');
 }
 exports.getproducts=(req, res, next) => {
-    // const products = adminData.products;
+    const products = Product.fetchAll()
     res.render('shop', {
       prods: products,
       pageTitle: 'Shop',
